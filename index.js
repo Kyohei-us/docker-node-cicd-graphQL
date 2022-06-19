@@ -1,3 +1,3 @@
-import express from express
+import express from "express";
 
-console.log("import express, then end app.")
+console.log("import express, then end app.");
