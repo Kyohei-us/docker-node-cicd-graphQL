@@ -5,17 +5,30 @@ import { buildSchema } from "graphql";
 const PORT = 3456;
 
 const schema = buildSchema(`
+    type Person {
+      id: Int
+      name: String
+    }
     type Query {
-        message: String
-        messages: [String]
+        people(startsWith: String): [Person]
     }
 `);
 
-const messages = ["1", "2", "3", "4"];
+function getPeople(args) {
+  let people = [
+    { id: 1, name: "Mike" },
+    { id: 2, name: "Jack" },
+    { id: 3, name: "John" },
+  ];
+  if (args.startsWith) {
+    return people.filter((p) => p.name.startsWith(args.startsWith));
+  } else {
+    return people;
+  }
+}
 
 const root = {
-  message: () => "Hello World!",
-  messages: messages,
+  people: getPeople,
 };
 
 const app = express();
